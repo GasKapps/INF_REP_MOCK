@@ -425,7 +425,7 @@
     // ============================================================================
     const OUTPUTS = {
       bad_bunny: {
-        score_0_100: 72,          // mock score
+        score_0_100: 11,          // mock score
 
         flag_counting_rows: [
           { influencer: "Bad Bunny", words: "trump|bad|bunny|he|donald|political|maga|not|over|just", tag: "political" },
