@@ -449,7 +449,6 @@
         noFlags: "No flags.",
         noEvidence: "No evidence for this filter.",
         pillNews: "WEB/NEWS",
-        // summary headings mapping
         summaryHeadings: {
           "1. Profile Context": "1. Profile Context",
           "2. Positive Reputation Signals": "2. Positive Reputation Signals",
@@ -458,9 +457,9 @@
           "5. Recommendation": "5. Recommendation",
           "5. Legal Positioning Recommendation": "5. Legal Positioning Recommendation"
         },
-        // tag names
         tags: {
           "sensitive political topics": "sensitive political topics",
+          "Sensitive Political Topics": "Sensitive Political Topics",
           "Negative Sentiment": "Negative Sentiment",
           "Collaboration Experience": "Collaboration Experience",
           "Protest": "Protest",
@@ -500,6 +499,7 @@
         },
         tags: {
           "sensitive political topics": "temas políticos sensíveis",
+          "Sensitive Political Topics": "temas políticos sensíveis",
           "Negative Sentiment": "sentimento negativo",
           "Collaboration Experience": "experiência de colaboração",
           "Protest": "protesto",
@@ -539,6 +539,7 @@
         },
         tags: {
           "sensitive political topics": "temas políticos sensibles",
+          "Sensitive Political Topics": "temas políticos sensibles",
           "Negative Sentiment": "sentimiento negativo",
           "Collaboration Experience": "experiencia de colaboración",
           "Protest": "protesta",
@@ -566,16 +567,15 @@
         const key = el.getAttribute('data-i18n');
         el.innerHTML = t(key);
       });
-      // Atualiza default do select (topo)
+      // default option do select
       const sel = document.getElementById('select');
       if(sel && sel.options[0]) sel.options[0].text = t('emptyTitle') + '…';
-      // Atualiza filtros
+      // filtros
       const ff = document.getElementById('flagFilter'); if(ff && ff.options[0]) ff.options[0].text = t('filterByFlag');
       const sf = document.getElementById('sortFilter'); if(sf && sf.options[0] && sf.options[1]) { sf.options[0].text = t('sortRecent'); sf.options[1].text = t('sortQuantity'); }
     }
     document.getElementById('langSelect').addEventListener('change', (e)=>{
       LANG = e.target.value || 'en';
-      // Reaplica textos estáticos e re-render para atualizar conteúdos dinâmicos
       applyI18NStatic();
       const keep = selectedInfluencerId;
       renderMain();
@@ -623,7 +623,6 @@ Bad Bunny’s association with explicit content, overt political symbolism, comm
 Bad Bunny’s association with explicit content, overt political symbolism, commentary on sensitive immigration and cultural topics, and public critiques from right-wing political figures suggest potential for regulatory scrutiny and reputational exposure. Prior congressional inquiries and calls for FCC investigation may indicate an elevated likelihood of public or political backlash, especially among conservative stakeholders.
 5. Legal Positioning Recommendation
 Suitable with safeguards / monitoring. Partnership should include enhanced compliance review, content alignment protocols, and ongoing monitoring for emerging risks. Escalation advised if campaign objectives intersect with sensitive policy or regulatory domains.`
-        }
       },
 
       ewan_mcgregor: {
@@ -645,7 +644,6 @@ Exposure stems from political commentary/alignments reported in press and past p
 Analysis suggests potential exposure related to McGregor’s public commentary on political figures and UK political campaigns, as well as past association with publicly reported personal relationship controversies. His involvement with politically sensitive content and cross-platform entertainment competitors also presents possible brand, regulatory, and reputational considerations.
 5. Legal Positioning Recommendation
 Suitable with safeguards / monitoring`
-        }
       },
 
       taylor_fritz: {
@@ -669,13 +667,11 @@ Taylor Fritz is a professional tennis player considered for brand partnership fo
 2. Positive Reputation Signals
 Fritz demonstrates collaboration experience through a recent partnership with a recognized lifestyle brand, indicating commercial viability and professional conduct. His affiliations suggest established credibility and positive brand association within the sports and entertainment sector.
 3. Risk & Sensitivity Factors
-Exposure indicators include negative social media discourse targeting an associate (Fritz's girlfriend), public commentary on sensitive issues such as domestic violence (involving other parties), and association with events subject to protest activity. These elements may contribute to perceived reputational vulnerability and audience sentiment volatility, though direct involvement in policy violations or misconduct by Fritz himself is not evident.4. Net Brand Association Assessment
-Low-to-moderate exposure; good fit for lifestyle/Gen Z positioning with standard guardrails.
+Exposure indicators include negative social media discourse targeting an associate (Fritz's girlfriend), public commentary on sensitive issues such as domestic violence (involving other parties), and association with events subject to protest activity. These elements may contribute to perceived reputational vulnerability and audience sentiment volatility, though direct involvement in policy violations or misconduct by Fritz himself is not evident.
 4. Net Partnership Exposure Assessment
 Overall exposure level may be considered moderate, characterized primarily by indirect association with contentious topics rather than substantiated personal misconduct. Risk factors are subject to heightened media attention but may be mitigated through monitoring and responsive communications protocols.
 5. Recommendation
 Suitable with safeguards / monitoring (comment moderation; content review pre-brief).`
-        }
       },
 
       vincent_cassel: {
@@ -701,7 +697,10 @@ Suitable for partnership. Continued monitoring is advisable to ensure ongoing al
 
     // ============================================================================
     // DOM + STATE
-   Id = "";
+    // ============================================================================
+    const $ = (id) => document.getElementById(id);
+
+    let selectedInfluencerId = "";   // <-- corrigido (antes estava "Id = ''")
     let activeTag = null;
     let currentPage = 1;
     const pageSize = 6;
@@ -711,8 +710,11 @@ Suitable for partnership. Continued monitoring is advisable to ensure ongoing al
     // ============================================================================
     function escapeHtml(str){
       return String(str ?? "")
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
     function escapeAttr(str){ return encodeURI(String(str ?? "")); }
 
@@ -882,7 +884,8 @@ Suitable for partnership. Continued monitoring is advisable to ensure ongoing al
       $("boxes").innerHTML = slice.map(ev => {
         const imgHtml = ev.image_url
           ? `<div class="boxImg">
-               ${escapeAttr(ev.image_url)}
+               <img alt="preview" src="${escapeAttr(ev.image_url)}"
+                    onerror="this.remove(); this.parentElement.style.display='none'">
              </div>`
           : ``;
 
@@ -892,9 +895,9 @@ Suitable for partnership. Continued monitoring is advisable to ensure ongoing al
             <div class="boxBody">
               <div class="boxTop">
                 <span class="pill">${t('pillNews')}</span>
-                <span class="date"></span>
+                <span class="date">${escapeHtml(ev.publication_date || "")}</span>
               </div>
-              ${escapeAttr(ev.url)}
+              <a class="titleLink" href="${escapeAttr(ev.url)}" target="_blank" rel="noreferrer">
                 ${escapeHtml(ev.title || ev.url)}
               </a>
               <div class="snippet">${escapeHtml(ev.snippet || "")}</div>
@@ -971,9 +974,7 @@ Suitable for partnership. Continued monitoring is advisable to ensure ongoing al
       document.querySelectorAll(".flagChip").forEach(el => {
         el.addEventListener("click", () => {
           activeTag = el.getAttribute("data-tag");
-          // Não re-renderiza o app inteiro: atualiza só o deep-dive
           renderDeepDive(activeTag, tagKeywordsMap);
-          // Atualiza seleção visual
           document.querySelectorAll(".flagChip").forEach(ch => ch.classList.remove("active"));
           el.classList.add("active");
         });
