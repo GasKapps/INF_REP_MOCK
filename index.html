@@ -37,7 +37,7 @@
       font-weight:900;
       color:var(--text);
       outline:none;
-      min-width:260px;
+      min-width:220px;
       flex:1;
     }
     .btn{
@@ -277,25 +277,19 @@
         </select>
         <button class="btn primary" id="openBtn">Open</button>
 
-        <!-- Seletor de idioma (adição mínima) -->
+        <!-- Language selector -->
         <select id="langSelect" style="max-width:180px;flex:0 0 auto">
           <option value="en" selected>English (EN)</option>
           <option value="pt">Português (PT)</option>
           <option value="es">Español (ES)</option>
         </select>
       </div>
-
-      <!--
-        ADD NEW INFLUENCER (markup only)
-        1) Add influencer object into INFLUENCERS array in the script
-        2) Add outputs into OUTPUTS map (key = influencer_id)
-      -->
     </section>
 
     <!-- EMPTY STATE (shown until selection) -->
     <section class="empty" id="emptyState">
-      <h2 class="emptyTitle">Select an influencer</h2>
-      <p class="emptyText">
+      <h2 class="emptyTitle" data-i18n="emptyTitle">Select an influencer</h2>
+      <p class="emptyText" data-i18n="emptyText">
         Use the search box or the dropdown above. Once selected, the reputation view will appear here.
       </p>
     </section>
@@ -324,7 +318,7 @@
         <div class="scoreCard">
           <div class="scoreTop">
             <div>
-              <div class="scoreLabel">Score (0–100)</div>
+              <div class="scoreLabel" data-i18n="scoreLabel">Score (0–100)</div>
               <div class="scoreValue" id="scoreValue">0</div>
             </div>
           </div>
@@ -338,21 +332,21 @@
         <!-- (1) FLAGS + DEEP DIVE -->
         <section class="card">
           <div class="cardHeader">
-            <h3 class="cardTitle">Flags (tags) + Deep dive (keywords)</h3>
+            <h3 class="cardTitle" data-i18n="flagsTitle">Flags (tags) + Deep dive (keywords)</h3>
           </div>
 
           <div class="flagsWrap">
             <div>
               <div class="flagsList" id="flagsList"></div>
-              <div class="muted" style="margin-top:10px">
+              <div class="muted" style="margin-top:10px" data-i18n="flagsHint">
                 Click a flag to see the detected keywords.
               </div>
             </div>
 
             <div class="deepDive">
-              <p class="deepDiveTitle" id="deepDiveTitle">Detected keywords</p>
+              <p class="deepDiveTitle" id="deepDiveTitle" data-i18n="deepDiveTitle">Detected keywords</p>
               <div class="wordsGrid" id="wordsGrid"></div>
-              <div class="muted" id="deepDiveHint" style="margin-top:10px;display:none">
+              <div class="muted" id="deepDiveHint" style="margin-top:10px;display:none" data-i18n="deepDiveEmpty">
                 No keywords for this flag.
               </div>
             </div>
@@ -362,13 +356,13 @@
         <!-- (2) FLAG HITS (0..33) -->
         <section class="card">
           <div class="cardHeader">
-            <h3 class="cardTitle">Flag hits (0–33)</h3>
+            <h3 class="cardTitle" data-i18n="flagHitsTitle">Flag hits (0–33)</h3>
           </div>
 
           <div class="kpi">
             <div class="kpiTop">
               <div>
-                <div style="font-weight:1000;font-size:13px">Total flags hit</div>
+                <div style="font-weight:1000;font-size:13px" data-i18n="flagHitsTotal">Total flags hit</div>
                 <div class="big" id="flagHitsTotal">0</div>
               </div>
               <div class="small">
@@ -382,7 +376,7 @@
               <span>0</span><span>33</span>
             </div>
 
-            <div class="muted">
+            <div class="muted" data-i18n="flagHitsFootnote">
               Total flags hit = number of <b>unique tags</b> detected for this influencer.
             </div>
           </div>
@@ -391,7 +385,7 @@
         <!-- (3) SUMMARY -->
         <section class="card">
           <div class="cardHeader">
-            <h3 class="cardTitle">Influencer Executive Assessment</h3>
+            <h3 class="cardTitle" data-i18n="summaryTitle">Influencer Executive Assessment</h3>
           </div>
           <div class="summaryList" id="summaryList"></div>
         </section>
@@ -399,17 +393,17 @@
         <!-- (4) EVIDENCE -->
         <section class="card">
           <div class="cardHeader">
-            <h3 class="cardTitle">Evidence (Web / News)</h3>
+            <h3 class="cardTitle" data-i18n="evidenceTitle">Evidence (Web / News)</h3>
           </div>
 
           <div class="filters">
             <div class="filterGroup">
               <select id="flagFilter">
-                <option value="all">Filter by Flag (tag)</option>
+                <option value="all" data-i18n="filterByFlag">Filter by Flag (tag)</option>
               </select>
               <select id="sortFilter">
-                <option value="recent">Sort: Most recent</option>
-                <option value="quantity">Sort: Quantity (keywords per tag)</option>
+                <option value="recent" data-i18n="sortRecent">Sort: Most recent</option>
+                <option value="quantity" data-i18n="sortQuantity">Sort: Quantity (keywords per tag)</option>
               </select>
             </div>
           </div>
@@ -419,7 +413,7 @@
           <div class="pagination" id="pagination"></div>
           <div class="pageInfo" id="pageInfo"></div>
 
-          <div class="muted" style="margin-top:12px">
+          <div class="muted" style="margin-top:12px" data-i18n="newsFootnote">
             News cards attempt to load a website preview image via a public service (best effort).
           </div>
         </section>
@@ -429,12 +423,12 @@
 
   <script>
     // ============================================================================
-    // I18N MIN (adição mínima, não altera sua lógica)
+    // I18N (UI strings + summary headings + tag names)
     // ============================================================================
     let LANG = 'en';
     const I18N = {
       en: {
-        search: "Search by name or Instagram (e.g., Bad Bunny / @badbunnypr)",
+        searchPlaceholder: "Search by name or Instagram (e.g., Bad Bunny / @badbunnypr)",
         open: "Open",
         emptyTitle: "Select an influencer",
         emptyText: "Use the search box or the dropdown above. Once selected, the reputation view will appear here.",
@@ -445,13 +439,37 @@
         deepDiveEmpty: "No keywords for this flag.",
         flagHitsTitle: "Flag hits (0–33)",
         flagHitsTotal: "Total flags hit",
+        flagHitsFootnote: "Total flags hit = number of <b>unique tags</b> detected for this influencer.",
+        summaryTitle: "Influencer Executive Assessment",
         evidenceTitle: "Evidence (Web / News)",
         filterByFlag: "Filter by Flag (tag)",
         sortRecent: "Sort: Most recent",
-        sortQuantity: "Sort: Quantity (keywords per tag)"
+        sortQuantity: "Sort: Quantity (keywords per tag)",
+        newsFootnote: "News cards attempt to load a website preview image via a public service (best effort).",
+        noFlags: "No flags.",
+        noEvidence: "No evidence for this filter.",
+        pillNews: "WEB/NEWS",
+        // summary headings mapping
+        summaryHeadings: {
+          "1. Profile Context": "1. Profile Context",
+          "2. Positive Reputation Signals": "2. Positive Reputation Signals",
+          "3. Legal, Regulatory & Reputational Exposure": "3. Legal, Regulatory & Reputational Exposure",
+          "4. Net Brand Association Assessment": "4. Net Brand Association Assessment",
+          "5. Recommendation": "5. Recommendation",
+          "5. Legal Positioning Recommendation": "5. Legal Positioning Recommendation"
+        },
+        // tag names
+        tags: {
+          "sensitive political topics": "sensitive political topics",
+          "Negative Sentiment": "Negative Sentiment",
+          "Collaboration Experience": "Collaboration Experience",
+          "Protest": "Protest",
+          "Abuse": "Abuse",
+          "brand endorsement": "brand endorsement"
+        }
       },
       pt: {
-        search: "Busque por nome ou Instagram (ex.: Bad Bunny / @badbunnypr)",
+        searchPlaceholder: "Busque por nome ou Instagram (ex.: Bad Bunny / @badbunnypr)",
         open: "Abrir",
         emptyTitle: "Selecione um influencer",
         emptyText: "Use a busca ou o seletor acima. Ao selecionar, a visão de reputação aparece aqui.",
@@ -462,13 +480,35 @@
         deepDiveEmpty: "Sem palavras‑chave para esta flag.",
         flagHitsTitle: "Flags acionadas (0–33)",
         flagHitsTotal: "Total de flags",
+        flagHitsFootnote: "Total de flags = número de <b>tags únicas</b> detectadas para este influencer.",
+        summaryTitle: "Avaliação Executiva do Influencer",
         evidenceTitle: "Evidências (Web / News)",
         filterByFlag: "Filtrar por Flag (tag)",
         sortRecent: "Ordenar: Mais recente",
-        sortQuantity: "Ordenar: Quantidade (palavras‑chave por tag)"
+        sortQuantity: "Ordenar: Quantidade (palavras‑chave por tag)",
+        newsFootnote: "Os cards tentam carregar uma imagem de prévia pública (best effort).",
+        noFlags: "Sem flags.",
+        noEvidence: "Sem evidências para este filtro.",
+        pillNews: "WEB/NEWS",
+        summaryHeadings: {
+          "1. Profile Context": "1. Contexto do Perfil",
+          "2. Positive Reputation Signals": "2. Sinais Positivos de Reputação",
+          "3. Legal, Regulatory & Reputational Exposure": "3. Exposição Legal/Regulatória & Reputacional",
+          "4. Net Brand Association Assessment": "4. Avaliação de Associação à Marca",
+          "5. Recommendation": "5. Recomendação",
+          "5. Legal Positioning Recommendation": "5. Recomendação (Posicionamento Legal)"
+        },
+        tags: {
+          "sensitive political topics": "temas políticos sensíveis",
+          "Negative Sentiment": "sentimento negativo",
+          "Collaboration Experience": "experiência de colaboração",
+          "Protest": "protesto",
+          "Abuse": "abuso",
+          "brand endorsement": "endorsement de marca"
+        }
       },
       es: {
-        search: "Busca por nombre o Instagram (ej.: Bad Bunny / @badbunnypr)",
+        searchPlaceholder: "Busca por nombre o Instagram (ej.: Bad Bunny / @badbunnypr)",
         open: "Abrir",
         emptyTitle: "Selecciona un influencer",
         emptyText: "Usa la búsqueda o el selector arriba. Al seleccionar, verás la vista de reputación aquí.",
@@ -479,36 +519,67 @@
         deepDiveEmpty: "No hay palabras clave para esta flag.",
         flagHitsTitle: "Flags activadas (0–33)",
         flagHitsTotal: "Total de flags",
+        flagHitsFootnote: "Total de flags = número de <b>tags únicas</b> detectadas para este influencer.",
+        summaryTitle: "Evaluación Ejecutiva del Influencer",
         evidenceTitle: "Evidencias (Web / Noticias)",
         filterByFlag: "Filtrar por Flag (tag)",
         sortRecent: "Ordenar: Más reciente",
-        sortQuantity: "Ordenar: Cantidad (palabras clave por tag)"
+        sortQuantity: "Ordenar: Cantidad (palabras clave por tag)",
+        newsFootnote: "Las tarjetas intentan cargar una imagen de vista previa pública (best effort).",
+        noFlags: "Sin flags.",
+        noEvidence: "Sin evidencias para este filtro.",
+        pillNews: "WEB/NEWS",
+        summaryHeadings: {
+          "1. Profile Context": "1. Contexto del Perfil",
+          "2. Positive Reputation Signals": "2. Señales Positivas de Reputación",
+          "3. Legal, Regulatory & Reputational Exposure": "3. Exposición Legal/Regulatoria y Reputacional",
+          "4. Net Brand Association Assessment": "4. Evaluación de Asociación de Marca",
+          "5. Recommendation": "5. Recomendación",
+          "5. Legal Positioning Recommendation": "5. Recomendación (Posicionamiento Legal)"
+        },
+        tags: {
+          "sensitive political topics": "temas políticos sensibles",
+          "Negative Sentiment": "sentimiento negativo",
+          "Collaboration Experience": "experiencia de colaboración",
+          "Protest": "protesta",
+          "Abuse": "abuso",
+          "brand endorsement": "endorsement de marca"
+        }
       }
     };
-    function applyI18N(){
-      const L = I18N[LANG] || I18N.en;
-      // Top
-      document.getElementById('search').placeholder = L.search;
-      document.getElementById('openBtn').textContent = L.open;
-      // Empty
-      const et = document.querySelector('.emptyTitle'); if(et) et.textContent = L.emptyTitle;
-      const ex = document.querySelector('.emptyText');  if(ex) ex.textContent = L.emptyText;
-      // Labels / titles
-      const sl = document.querySelector('.scoreLabel'); if(sl) sl.textContent = L.scoreLabel;
-      const titles = document.querySelectorAll('.cardTitle');
-      if(titles[0]) titles[0].textContent = L.flagsTitle;
-      const hint = document.querySelector('.flagsWrap .muted'); if(hint) hint.textContent = L.flagsHint;
-      const dd = document.getElementById('deepDiveTitle'); if(dd) dd.textContent = L.deepDiveTitle;
-      const ddh = document.getElementById('deepDiveHint'); if(ddh) ddh.textContent = L.deepDiveEmpty;
-      if(titles[1]) titles[1].textContent = L.flagHitsTitle;
-      if(titles[2]) titles[2].textContent = "Influencer Executive Assessment";
-      if(titles[3]) titles[3].textContent = L.evidenceTitle;
-      const ff = document.getElementById('flagFilter'); if(ff) ff.options[0].text = L.filterByFlag;
-      const sf = document.getElementById('sortFilter'); if(sf){ sf.options[0].text = L.sortRecent; sf.options[1].text = L.sortQuantity; }
+
+    function t(key){ return (I18N[LANG] && I18N[LANG][key]) ?? (I18N.en[key] ?? key); }
+    function tHeading(line){
+      const m = String(line||"").match(/^(\d+\.\s.+)$/);
+      if(!m) return line;
+      const dict = I18N[LANG]?.summaryHeadings || I18N.en.summaryHeadings;
+      return dict[m[1]] || line;
+    }
+    function tTag(tag){
+      const dict = I18N[LANG]?.tags || I18N.en.tags;
+      return dict[tag] || tag;
+    }
+    function applyI18NStatic(){
+      document.getElementById('search').placeholder = t('searchPlaceholder');
+      document.getElementById('openBtn').textContent = t('open');
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        el.innerHTML = t(key);
+      });
+      // Atualiza default do select (topo)
+      const sel = document.getElementById('select');
+      if(sel && sel.options[0]) sel.options[0].text = t('emptyTitle') + '…';
+      // Atualiza filtros
+      const ff = document.getElementById('flagFilter'); if(ff && ff.options[0]) ff.options[0].text = t('filterByFlag');
+      const sf = document.getElementById('sortFilter'); if(sf && sf.options[0] && sf.options[1]) { sf.options[0].text = t('sortRecent'); sf.options[1].text = t('sortQuantity'); }
     }
     document.getElementById('langSelect').addEventListener('change', (e)=>{
       LANG = e.target.value || 'en';
-      applyI18N();
+      // Reaplica textos estáticos e re-render para atualizar conteúdos dinâmicos
+      applyI18NStatic();
+      const keep = selectedInfluencerId;
+      renderMain();
+      selectedInfluencerId = keep;
     });
 
     // ============================================================================
@@ -519,8 +590,6 @@
       { influencer_id: "ewan_mcgregor", name: "Ewan McGregor", instagram_handle: "officialewanmcgregor_" },
       { influencer_id: "taylor_fritz",  name: "Taylor Fritz",  instagram_handle: "taylor_fritz" },
       { influencer_id: "vincent_cassel", name: "Vincent Cassel", instagram_handle: "vincentcassel" }
-      // ADD NEXT INFLUENCER HERE (markup only)
-      // { influencer_id: "cristiano", name: "Cristiano Ronaldo", instagram_handle: "cristiano" }
     ];
 
     // ============================================================================
@@ -529,16 +598,9 @@
     const OUTPUTS = {
       bad_bunny: {
         score_0_100: 85,
-
         flag_counting_rows: [
-          {
-            influencer: "Bad Bunny",
-            tag: "sensitive political topics",
-            // Principais termos recorrentes nos títulos/descrições do Excel
-            words: "super|bowl|halftime|probe|congress|fcc|backlash|trump|maga|immigration|spanish|lyrics"
-          }
+          { influencer: "Bad Bunny", tag: "sensitive political topics", words: "super|bowl|halftime|probe|congress|fcc|backlash|trump|maga|immigration|spanish|lyrics" }
         ],
-
         evidence_links_rows: [
           { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.axios.com/2026/02/10/bad-bunny-super-bowl-halftime-show-fcc-investigation" },
           { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.nytimes.com/2026/02/09/us/trump-bad-bunny-super-bowl-halftime-show.html" },
@@ -551,87 +613,49 @@
           { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.cbc.ca/news/world/trump-bad-bunny-super-bowl-halftime-show-latino-voters-9.7081577" },
           { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.politico.com/news/2026/02/08/bad-bunny-super-bowl-immigration-00770475" }
         ],
-
         summary_text: `1. Profile Context
-Bad Bunny é artista global de alto alcance. O review foi disparado por ampla cobertura sobre o show do Super Bowl e seu histórico de ativismo/temas sensíveis.
+Bad Bunny is a globally recognized Latin music artist with high relevance for campaigns targeting diverse and youth-oriented audiences. This assessment is prompted by recent high-profile controversy linked to his Super Bowl halftime performance and ongoing public discourse regarding his cultural and political advocacy.
 2. Positive Reputation Signals
-Relevância cultural, alinhamento a diversidade e inclusão, forte tração com públicos jovens e multiculturais.
+Bad Bunny maintains significant credibility and cultural influence, with a history of professional engagement and strong alignment to causes resonant with multicultural and progressive demographics. His visibility and advocacy may enhance brand relevance in markets prioritizing diversity and inclusion.
 3. Legal, Regulatory & Reputational Exposure
-Risco derivado de simbolismos políticos explícitos, críticas públicas e pedidos de investigação (incluindo FCC/Congresso) — potencial de polarização e escrutínio regulatório.
+Bad Bunny’s association with explicit content, overt political symbolism, commentary on sensitive immigration and cultural topics, and public critiques from right-wing political figures suggest potential for regulatory scrutiny and reputational exposure. Prior congressional inquiries and calls for FCC investigation may indicate an elevated likelihood of public or political backlash, especially among conservative stakeholders.
 4. Net Brand Association Assessment
-Exposição moderada–elevada, com benefícios de alcance e autenticidade para marcas confortáveis com causas sociais.
-5. Recommendation
-Apto com salvaguardas/monitoramento (checagem de conteúdo, governança de campanha, acompanhamento de backlash).`
+Bad Bunny’s association with explicit content, overt political symbolism, commentary on sensitive immigration and cultural topics, and public critiques from right-wing political figures suggest potential for regulatory scrutiny and reputational exposure. Prior congressional inquiries and calls for FCC investigation may indicate an elevated likelihood of public or political backlash, especially among conservative stakeholders.
+5. Legal Positioning Recommendation
+Suitable with safeguards / monitoring. Partnership should include enhanced compliance review, content alignment protocols, and ongoing monitoring for emerging risks. Escalation advised if campaign objectives intersect with sensitive policy or regulatory domains.`
+        }
       },
 
-      // ==============================
-      // Ewan McGregor
-      // ==============================
       ewan_mcgregor: {
         score_0_100: 62,
-
         flag_counting_rows: [
-          {
-            influencer: "Ewan McGregor",
-            tag: "Sensitive Political Topics",
-            words: "snub|interview|piers|morgan|womens|march|row|boris|johnson|brexit|tweets|tirade"
-          }
+          { influencer: "Ewan McGregor", tag: "Sensitive Political Topics", words: "snub|interview|piers|morgan|womens|march|row|boris|johnson|brexit|tweets|tirade" }
         ],
-
         evidence_links_rows: [
-          {
-            influencer: "Ewan McGregor",
-            tag: "Sensitive Political Topics",
-            url: "https://www.theguardian.com/film/2017/jan/24/ewan-mcgregor-snubs-good-morning-britain-interview-piers-morgan-womens-march-row"
-          },
-          {
-            influencer: "Ewan McGregor",
-            tag: "Sensitive Political Topics",
-            url: "https://www.usatoday.com/story/news/nation-now/2016/06/30/ewan-mcgregor-foul-mouthed-tirade-boris-johnson-brexit/86554272/"
-          }
+          { influencer: "Ewan McGregor", tag: "Sensitive Political Topics", url: "https://www.theguardian.com/film/2017/jan/24/ewan-mcgregor-snubs-good-morning-britain-interview-piers-morgan-womens-march-row" },
+          { influencer: "Ewan McGregor", tag: "Sensitive Political Topics", url: "https://www.usatoday.com/story/news/nation-now/2016/06/30/ewan-mcgregor-foul-mouthed-tirade-boris-johnson-brexit/86554272/" }
         ],
-
         summary_text: `1. Profile Context
-Ewan McGregor is a high-profile actor (global visibility). Assessment triggered by press items touching political commentary/sensitivity.
+Ewan McGregor is a high-profile actor known for roles in globally recognized productions and ongoing media visibility. His relevance for partnership consideration is high due to significant public reach; recent media coverage has prompted an assessment in relation to sensitive topics and public conduct.
 2. Positive Partnership Signals
-Consistent professional standing and philanthropic participation; media presence is generally positive.
+McGregor demonstrates credible professional standing, industry recognition, and alignment with public health initiatives, including active promotion of COVID-19 relief efforts. His participation in reputable philanthropic campaigns and general media engagement may indicate positive transparency and social responsibility.
 3. Legal, Regulatory & Reputational Exposure
 Exposure stems from political commentary/alignments reported in press and past personal-life coverage. Monitor narratives across UK/US outlets.
 4. Net Partnership Exposure Assessment
-Overall manageable risk; maintain watch on sensitive topics and evolving news cycles.
+Analysis suggests potential exposure related to McGregor’s public commentary on political figures and UK political campaigns, as well as past association with publicly reported personal relationship controversies. His involvement with politically sensitive content and cross-platform entertainment competitors also presents possible brand, regulatory, and reputational considerations.
 5. Legal Positioning Recommendation
-Suitable with safeguards / monitoring.`
+Suitable with safeguards / monitoring`
+        }
       },
 
-      // ==============================
-      // Taylor Fritz
-      // ==============================
       taylor_fritz: {
         score_0_100: 12,
-
         flag_counting_rows: [
-          {
-            influencer: "Taylor Fritz",
-            tag: "Negative Sentiment",
-            words: "trolls|abuse|comments|backlash|social|media|australian|open|criticize|defend|clap|respond"
-          },
-          {
-            influencer: "Taylor Fritz",
-            tag: "Collaboration Experience",
-            words: "collaboration|brand|lifestyle|partnership|campaign|fashion|gen|crew|tennis|dc|open"
-          },
-          {
-            influencer: "Taylor Fritz",
-            tag: "Protest",
-            words: "climate|protest|match|delay|washington|guardian|crowd|hold|off"
-          },
-          {
-            influencer: "Taylor Fritz",
-            tag: "Abuse",
-            words: "harassment|online|abuse|trolls|backlash|comments|posts"
-          }
+          { influencer: "Taylor Fritz", tag: "Negative Sentiment",       words: "trolls|abuse|comments|backlash|social|media|australian|open|criticize|defend|clap|respond" },
+          { influencer: "Taylor Fritz", tag: "Collaboration Experience", words: "collaboration|brand|lifestyle|partnership|campaign|fashion|gen|crew|tennis|dc|open" },
+          { influencer: "Taylor Fritz", tag: "Protest",                  words: "climate|protest|match|delay|washington|guardian|crowd|hold|off" },
+          { influencer: "Taylor Fritz", tag: "Abuse",                    words: "harassment|online|abuse|trolls|backlash|comments|posts" }
         ],
-
         evidence_links_rows: [
           { influencer: "Taylor Fritz", tag: "Negative Sentiment", url: "https://www.dailymail.co.uk/sport/tennis/article-14494687/Tennis-WAG-Morgan-Riddle-boyfriend-Taylor-Fritz-trolls.html" },
           { influencer: "Taylor Fritz", tag: "Negative Sentiment", url: "https://www.express.co.uk/sport/tennis/2160031/taylor-fritz-girlfriend-morgan-riddle-australian-open" },
@@ -640,79 +664,63 @@ Suitable with safeguards / monitoring.`
           { influencer: "Taylor Fritz", tag: "Protest", url: "https://www.theguardian.com/sport/2023/aug/05/taylor-fritz-andy-murray-citi-open-climate-protest-tennis" },
           { influencer: "Taylor Fritz", tag: "Abuse", url: "https://www.express.co.uk/sport/tennis/2160031/taylor-fritz-girlfriend-morgan-riddle-australian-open" }
         ],
-
         summary_text: `1. Profile Context
-Top US tennis player; high social reach via partner-driven content. Review triggered by waves of online discourse.
+Taylor Fritz is a professional tennis player considered for brand partnership following recent public engagement, increased media visibility, and collaborative activity, prompting a risk and legal exposure assessment.
 2. Positive Reputation Signals
-Active collabs and lifestyle crossovers expand audience; mainstream sports coverage mostly positive.
+Fritz demonstrates collaboration experience through a recent partnership with a recognized lifestyle brand, indicating commercial viability and professional conduct. His affiliations suggest established credibility and positive brand association within the sports and entertainment sector.
 3. Risk & Sensitivity Factors
-Indirect exposure via social backlash toward partner/content; occasional association with protest-related match disruptions.
-4. Net Brand Association Assessment
+Exposure indicators include negative social media discourse targeting an associate (Fritz's girlfriend), public commentary on sensitive issues such as domestic violence (involving other parties), and association with events subject to protest activity. These elements may contribute to perceived reputational vulnerability and audience sentiment volatility, though direct involvement in policy violations or misconduct by Fritz himself is not evident.4. Net Brand Association Assessment
 Low-to-moderate exposure; good fit for lifestyle/Gen Z positioning with standard guardrails.
+4. Net Partnership Exposure Assessment
+Overall exposure level may be considered moderate, characterized primarily by indirect association with contentious topics rather than substantiated personal misconduct. Risk factors are subject to heightened media attention but may be mitigated through monitoring and responsive communications protocols.
 5. Recommendation
 Suitable with safeguards / monitoring (comment moderation; content review pre-brief).`
+        }
       },
 
-      // ==============================
-      // Vincent Cassel
-      // ==============================
       vincent_cassel: {
         score_0_100: 30,
-
         flag_counting_rows: [
-          {
-            influencer: "Vincent Cassel",
-            tag: "brand endorsement",
-            words: "fashion|moncler|show|brand|campaign|style|cinema|influences|modeling|event|exclusive|dialogue"
-          }
+          { influencer: "Vincent Cassel", tag: "brand endorsement", words: "fashion|moncler|show|brand|campaign|style|cinema|influences|modeling|event|exclusive|dialogue" }
         ],
-
         evidence_links_rows: [
-          {
-            influencer: "Vincent Cassel",
-            tag: "brand endorsement",
-            url: "https://infobae.com/entretenimiento/2025/03/20/vincent-cassel-sobre-su-influencias-en-el-cine-y-la-moda-es-cuestion-de-dejarse-llevar"
-          }
+          { influencer: "Vincent Cassel", tag: "brand endorsement", url: "https://infobae.com/entretenimiento/2025/03/20/vincent-cassel-sobre-su-influencias-en-el-cine-y-la-moda-es-cuestion-de-dejarse-llevar" }
         ],
-
         summary_text: `1. Profile Context
-Ator consagrado com aparições recentes em eventos de moda/brand (endorsement).
+Vincent Cassel is a public figure with an established career in entertainment and modeling, recently associated with Moncler via participation in an exclusive fashion event. This assessment is triggered by direct brand collaboration and endorsement activity.
 2. Positive Reputation Signals
-Bom fit de imagem premium; nenhuma controvérsia relevante listada.
+Cassel’s engagement with Moncler demonstrates alignment between his personal brand and the company’s image, suggesting credibility and professional conduct within public-facing collaborations. No indicators of opaque or misleading representation were identified in this context.
 3. Risk & Sensitivity Factors
-Baixa exposição legal/reputacional; atenção apenas a contratos e uso de imagem.
+Current evidence does not reference past controversies or misconduct relating to Cassel or his Moncler collaboration. The partnership context is limited to fashion endorsement, which may indicate minimal regulatory or reputational exposure unless further information emerges.
 4. Net Brand Association Assessment
-Associação positiva com lifestyle/fashion; risco baixo.
+Available information supports a low exposure profile from both legal and reputational perspectives, with positive signals outweighing risk indicators. The potential for adverse impact appears limited based on the scope of existing collaboration.
 5. Recommendation
-Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
+Suitable for partnership. Continued monitoring is advisable to ensure ongoing alignment with legal, compliance, and brand safety standards.`
       }
     };
 
     // ============================================================================
     // DOM + STATE
-    // ============================================================================
-    const $ = (id) => document.getElementById(id);
-
-    let selectedInfluencerId = "";
+   Id = "";
     let activeTag = null;
     let currentPage = 1;
     const pageSize = 6;
 
     // ============================================================================
-    // Helpers - RECEITA DE BOLO DE MILHO VERDE
+    // Helpers
     // ============================================================================
     function escapeHtml(str){
       return String(str ?? "")
         .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
         .replaceAll('"',"&quot;").replaceAll("'","&#039;");
     }
-    function escapeAttr(str){ return escapeHtml(str).replaceAll(" ","%20"); }
+    function escapeAttr(str){ return encodeURI(String(str ?? "")); }
 
     function instagramUrl(handle){
-      return `https://www.instagram.com/${encodeURIComponent(handle)}/`;
+      return handle ? `https://www.instagram.com/${encodeURIComponent(handle)}/` : "#";
     }
     function instagramAvatarUrl(handle){
-      return `https://unavatar.io/instagram/${encodeURIComponent(handle)}`;
+      return handle ? `https://unavatar.io/instagram/${encodeURIComponent(handle)}` : "";
     }
 
     function renderScore(score){
@@ -729,7 +737,6 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
           .split("|")
           .map(w => w.trim())
           .filter(Boolean);
-
         if(!map.has(tag)) map.set(tag, new Set());
         const set = map.get(tag);
         parts.forEach(p => set.add(p));
@@ -763,17 +770,15 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
         if(seen.has(key)) return;
         seen.add(key);
 
-        // Best-effort website preview image without API keys.
-        // You can swap to another service later if needed.
         const previewImg = `https://image.thum.io/get/width/900/${encodeURIComponent(url)}`;
 
         out.push({
           evidence_id: "ev_" + String(out.length + 1).padStart(3,"0"),
           tag,
           url,
-          title: url,            // INSERT NEXT: title if you start returning it
-          snippet: "",           // INSERT NEXT: snippet if you start returning it
-          publication_date: "",  // INSERT NEXT: date if you start returning it
+          title: url,
+          snippet: "",
+          publication_date: "",
           image_url: previewImg
         });
       });
@@ -782,7 +787,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
 
     function renderDeepDive(tag, tagKeywordsMap){
       const set = tagKeywordsMap.get(tag) || new Set();
-      $("deepDiveTitle").textContent = `Detected keywords — ${tag}`;
+      $("deepDiveTitle").textContent = `${t('deepDiveTitle')} — ${tTag(tag)}`;
       $("wordsGrid").innerHTML = Array.from(set)
         .sort((a,b)=>a.localeCompare(b))
         .map(w => `<span class="wordPill">${escapeHtml(w)}</span>`)
@@ -790,11 +795,14 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       $("deepDiveHint").style.display = set.size ? "none" : "block";
     }
 
-    // Summary parsing into items
+    // Summary parsing into items + tradução dos títulos
+    function translateSummaryHeadings(text){
+      const lines = String(text||'').split('\n');
+      return lines.map(l => tHeading(l)).join('\n');
+    }
     function parseSummaryToItems(text){
-      const raw = String(text || "").trim();
+      const raw = translateSummaryHeadings(String(text || "").trim());
       if(!raw) return [];
-
       const lines = raw.split("\n");
       const items = [];
       let current = null;
@@ -807,10 +815,10 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       }
 
       for(const line of lines){
-        const m = line.match(/^(\d+)\.\s*(.+)$/);
+        const m = line.match(/^(\d+\.\s.*)$/);
         if(m){
           pushCurrent();
-          current = { title: m[2].trim(), body: "" };
+          current = { title: m[1].trim(), body: "" };
         }else{
           if(!current){
             current = { title: "Summary", body: "" };
@@ -856,7 +864,10 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
     window.goPage = function(p){
       currentPage = p;
       renderMain();
-      window.scrollTo({ top: document.querySelector(".filters").getBoundingClientRect().top + window.scrollY - 140, behavior:"smooth" });
+      const el = document.querySelector(".filters");
+      if(el){
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 140, behavior:"smooth" });
+      }
     };
 
     function renderEvidence(evidence){
@@ -871,8 +882,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       $("boxes").innerHTML = slice.map(ev => {
         const imgHtml = ev.image_url
           ? `<div class="boxImg">
-               <img alt="preview" src="${escapeAttr(ev.image_url)}"
-                    onerror="this.remove(); this.parentElement.style.display='none'"/>
+               ${escapeAttr(ev.image_url)}
              </div>`
           : ``;
 
@@ -881,21 +891,21 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
             ${imgHtml}
             <div class="boxBody">
               <div class="boxTop">
-                <span class="pill">WEB/NEWS</span>
-                <span class="date">${escapeHtml(ev.publication_date || "")}</span>
+                <span class="pill">${t('pillNews')}</span>
+                <span class="date"></span>
               </div>
-              <a class="titleLink" href="${escapeAttr(ev.url)}" target="_blank" rel="noreferrer">
+              ${escapeAttr(ev.url)}
                 ${escapeHtml(ev.title || ev.url)}
               </a>
               <div class="snippet">${escapeHtml(ev.snippet || "")}</div>
               <div class="tagRow">
-                <span class="miniTag">tag: ${escapeHtml(ev.tag)}</span>
+                <span class="miniTag">tag: ${escapeHtml(tTag(ev.tag))}</span>
                 <span class="miniTag">keywords: ${escapeHtml(ev._tag_keyword_count || 0)}</span>
               </div>
             </div>
           </div>
         `;
-      }).join("") || `<div class="muted">No evidence for this filter.</div>`;
+      }).join("") || `<div class="muted">${escapeHtml(t('noEvidence'))}</div>`;
 
       $("pagination").innerHTML = buildPagination(totalPages);
       const showingFrom = total === 0 ? 0 : start + 1;
@@ -910,7 +920,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       if(!selectedInfluencerId){
         $("mainView").style.display = "none";
         $("emptyState").style.display = "block";
-        applyI18N(); // mantém textos coerentes com idioma
+        applyI18NStatic();
         return;
       }
 
@@ -923,7 +933,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       // Instagram header link (avatar + name + handle)
       const ig = instagramUrl(inf.instagram_handle);
       $("igHeaderLink").href = ig;
-      $("igHandlePill").textContent = `@${inf.instagram_handle}`;
+      $("igHandlePill").textContent = inf.instagram_handle ? `@${inf.instagram_handle}` : "—";
 
       // Header
       $("infName").textContent = inf?.name || "—";
@@ -932,8 +942,12 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
 
       const img = $("avatarImg");
       img.src = instagramAvatarUrl(inf.instagram_handle);
-      img.onload = () => { img.style.display="block"; $("avatarFallback").style.display="none"; };
-      img.onerror = () => { img.style.display="none"; $("avatarFallback").style.display="block"; };
+      if(inf.instagram_handle){
+        img.onload = () => { img.style.display="block"; $("avatarFallback").style.display="none"; };
+        img.onerror = () => { img.style.display="none"; $("avatarFallback").style.display="block"; };
+      }else{
+        img.style.display="none"; $("avatarFallback").style.display="block";
+      }
 
       renderScore(out?.score_0_100 ?? 0);
 
@@ -948,19 +962,24 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       // Flags list
       $("flagsList").innerHTML = tagCounts.map(x => `
         <span class="flagChip ${x.tag===activeTag?'active':''}" data-tag="${escapeAttr(x.tag)}">
-          ${escapeHtml(x.tag)}
+          ${escapeHtml(tTag(x.tag))}
           <span class="count">${escapeHtml(x.count)}</span>
         </span>
-      `).join("") || `<span class="muted">No flags.</span>`;
+      `).join("") || `<span class="muted">${escapeHtml(t('noFlags'))}</span>`;
 
+      // (Re)bind clicks
       document.querySelectorAll(".flagChip").forEach(el => {
         el.addEventListener("click", () => {
           activeTag = el.getAttribute("data-tag");
-          renderMain();
+          // Não re-renderiza o app inteiro: atualiza só o deep-dive
+          renderDeepDive(activeTag, tagKeywordsMap);
+          // Atualiza seleção visual
+          document.querySelectorAll(".flagChip").forEach(ch => ch.classList.remove("active"));
+          el.classList.add("active");
         });
       });
 
-      // Deep dive
+      // Deep dive inicial
       if(activeTag) renderDeepDive(activeTag, tagKeywordsMap);
 
       // Flag hits (0..33)
@@ -971,7 +990,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       $("flagHitsPct").textContent = pct + "%";
       $("flagHitsBar").style.width = pct + "%";
 
-      // Summary -> items
+      // Summary -> items (com títulos traduzidos)
       const items = parseSummaryToItems(out?.summary_text || "");
       $("summaryList").innerHTML = items.map(it => `
         <div class="summaryItem">
@@ -991,24 +1010,25 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       const tags = tagCounts.map(x => x.tag);
       const currentFilter = $("flagFilter").value || "all";
       $("flagFilter").innerHTML =
-        `<option value="all">Filter by Flag (tag)</option>` +
-        tags.map(tg => `<option value="${escapeAttr(tg)}">${escapeHtml(tg)}</option>`).join("");
+        `<option value="all">${t('filterByFlag')}</option>` +
+        tags.map(tg => `<option value="${escapeAttr(tg)}">${escapeHtml(tTag(tg))}</option>`).join("");
 
       if(tags.includes(currentFilter)) $("flagFilter").value = currentFilter;
       else $("flagFilter").value = "all";
 
       renderEvidence(evidence);
 
-      // Aplica i18n após render (mantém seu fluxo)
-      applyI18N();
+      // Aplica i18n (estáticos)
+      applyI18NStatic();
     }
 
     // ============================================================================
     // Selector behavior (search filters select list)
     // ============================================================================
     function populateSelect(options){
-      $("select").innerHTML = `<option value="">Select an influencer…</option>` +
-        options.map(i => `<option value="${escapeAttr(i.influencer_id)}">${escapeHtml(i.name)} (@${escapeHtml(i.instagram_handle)})</option>`).join("");
+      document.getElementById("select").innerHTML =
+        `<option value="">${t('emptyTitle')}…</option>` +
+        options.map(i => `<option value="${escapeAttr(i.influencer_id)}">${escapeHtml(i.name)} (@${escapeHtml(i.instagram_handle||'')})</option>`).join("");
     }
 
     function applySearch(){
@@ -1016,8 +1036,8 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
       const filtered = INFLUENCERS.filter(i =>
         !q ||
         i.name.toLowerCase().includes(q) ||
-        i.instagram_handle.toLowerCase().includes(q) ||
-        ("@" + i.instagram_handle).toLowerCase().includes(q)
+        (i.instagram_handle||"").toLowerCase().includes(q) ||
+        ("@" + (i.instagram_handle||"")).toLowerCase().includes(q)
       );
       populateSelect(filtered);
     }
@@ -1048,7 +1068,7 @@ Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
     $("sortFilter").addEventListener("change", () => { currentPage = 1; renderMain(); });
 
     // Init
-    applyI18N();
+    applyI18NStatic();
     populateSelect(INFLUENCERS);
     renderMain();
   </script>
