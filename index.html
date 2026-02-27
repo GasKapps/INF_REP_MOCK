@@ -49,8 +49,19 @@
       cursor:pointer;
       white-space:nowrap;
     }
-    .btn.primary{background:#0f172a;color:#fff;border-color:#0f172a}
-
+    .btn.primary{
+      background:#FFC600;
+      color:#0f172a;
+      border-color:#FFC600;
+    }
+    .btn.primary:hover{
+      background:#FFB800;
+      border-color:#FFB800;
+    }
+    .btn.primary:active{
+      transform: translateY(1px);
+    }
+  
     /* ---------- Empty state ---------- */
     .empty{
       margin-top:16px;
@@ -222,7 +233,7 @@
     .summaryItemText{
       margin:0;
       color:var(--text);
-      font-weight:800;
+      font-weight:500;
       font-size:13px;
       line-height:1.5;
       white-space:pre-wrap;
