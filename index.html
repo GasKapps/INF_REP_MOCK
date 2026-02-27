@@ -426,7 +426,11 @@
     // INFLUENCERS LIST
     // ============================================================================
     const INFLUENCERS = [
-      { influencer_id: "bad_bunny", name: "Bad Bunny", instagram_handle: "badbunnypr" }
+      { influencer_id: "bad_bunny", name: "Bad Bunny", instagram_handle: "badbunnypr" },
+      { influencer_id: "ewan_mcgregor", name: "Ewan McGregor", instagram_handle: "officialewanmcgregor_" },
+      { influencer_id: "taylor_fritz",  name: "Taylor Fritz",  instagram_handle: "taylor_fritz" },
+      { influencer_id: "vincent_cassel", name: "Vincent Cassel", instagram_handle: "vincentcassel" }
+
       // ADD NEXT INFLUENCER HERE (markup only)
       // { influencer_id: "cristiano", name: "Cristiano Ronaldo", instagram_handle: "cristiano" }
     ];
@@ -436,25 +440,45 @@
     // ============================================================================
     const OUTPUTS = {
       bad_bunny: {
-        score_0_100: 11,          // mock score
+  score_0_100: 85,
 
-        flag_counting_rows: [
-          { influencer: "Bad Bunny", words: "trump|bad|bunny|he|donald|political|maga|not|over|just", tag: "political" },
-          { influencer: "Bad Bunny", words: "trump|bad|bunny|he|donald|political|maga|not|over|just", tag: "maga" },
-          { influencer: "Bad Bunny", words: "protest|america|easter|egg|close|god|de|bless|country|teach", tag: "protest" }
-        ],
+  flag_counting_rows: [
+    {
+      influencer: "Bad Bunny",
+      tag: "sensitive political topics",
+      // Principais termos recorrentes nos títulos/descrições do Excel
+      words: "super|bowl|halftime|probe|congress|fcc|backlash|trump|maga|immigration|spanish|lyrics"
+    }
+  ],
 
-        evidence_links_rows: [
-          { influencer: "Bad Bunny", tag: "political", url: "https://www.nbcnews.com/pop-culture/pop-culture-news/jill-zarin-fired-real-housewives-revival-show-controver..." },
-          { influencer: "Bad Bunny", tag: "political", url: "https://www.businessinsider.com/bad-bunny-super-bowl-message-immigation-diversity-ice-2026-2" },
-          { influencer: "Bad Bunny", tag: "political", url: "https://www.businessinsider.com/bad-bunny-super-bowl-message-immigation-diversity-ice-2026-2" },
-          { influencer: "Bad Bunny", tag: "political", url: "https://www.businessinsider.com/bad-bunny-super-bowl-message-immigation-diversity-ice-2026-2" },
-          { influencer: "Bad Bunny", tag: "maga", url: "https://www.axios.com/2026/02/12/bad-bunny-halftime-streams-gop-backlash" },
-          { influencer: "Bad Bunny", tag: "maga", url: "https://www.axios.com/2026/02/12/bad-bunny-halftime-streams-gop-backlash" },
-          { influencer: "Bad Bunny", tag: "maga", url: "https://www.bbc.com/news/articles/c394g7nnzmzo" },
-          { influencer: "Bad Bunny", tag: "maga", url: "https://www.bbc.com/news/articles/c394g7nnzmzo" }
-        ],
+  evidence_links_rows: [
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.axios.com/2026/02/10/bad-bunny-super-bowl-halftime-show-fcc-investigation" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.nytimes.com/2026/02/09/us/trump-bad-bunny-super-bowl-halftime-show.html" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.theguardian.com/us-news/2026/feb/08/bad-bunny-super-bowl-trump-maga" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.bbc.com/news/articles/cd0y18g8g7ro" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://people.com/gop-congressmen-want-investigation-bad-bunny-super-bowl-halftime-show-11904547" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://time.com/7376165/ogles-bad-bunny-super-bowl-halftime-sexual-lyrics-congress-investigation/" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.nbcnews.com/pop-culture/pop-culture-news/jill-zarin-fired-real-housewives-revival-show-controversial-bad-bunny-rcna258416" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://abcnews.go.com/US/trump-calls-bad-bunnys-super-bowl-halftime-show/story?id=129980124" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.cbc.ca/news/world/trump-bad-bunny-super-bowl-halftime-show-latino-voters-9.7081577" },
+    { influencer: "Bad Bunny", tag: "sensitive political topics", url: "https://www.politico.com/news/2026/02/08/bad-bunny-super-bowl-immigration-00770475" }
+  ],
 
+  summary_text: `1. Profile Context
+Bad Bunny é artista global de alto alcance. O review foi disparado por ampla cobertura sobre o show do Super Bowl e seu histórico de ativismo/temas sensíveis.
+
+2. Positive Reputation Signals
+Relevância cultural, alinhamento a diversidade e inclusão, forte tração com públicos jovens e multiculturais.
+
+3. Legal, Regulatory & Reputational Exposure
+Risco derivado de simbolismos políticos explícitos, críticas públicas e pedidos de investigação (incluindo FCC/Congresso) — potencial de polarização e escrutínio regulatório.
+
+4. Net Brand Association Assessment
+Exposição moderada–elevada, com benefícios de alcance e autenticidade para marcas confortáveis com causas sociais.
+
+5. Recommendation
+Apto com salvaguardas/monitoramento (checagem de conteúdo, governança de campanha, acompanhamento de backlash).`
+}
         summary_text: `1. Profile Context
 Bad Bunny is an internationally recognized music artist and public figure whose recent activities—including a high-profile Super Bowl halftime performance—have generated significant political and cultural attention. He is under review for potential influencer partnership.
 2. Positive Reputation Signals
@@ -467,6 +491,147 @@ Partnering with Bad Bunny positions a brand as progressive, socially conscious, 
 Suitable with monitoring—Recommended for brands aligned with social impact and cultural diversity, contingent on ongoing review of the socio-political landscape and risk tolerance.`
       }
     };
+
+// ==============================
+// Ewan McGregor
+// ==============================
+ewan_mcgregor: {
+  // The spreadsheet gives a score in 0–1; I normalized to 0–100 (≈62).
+  // If you prefer a different scaling rule, tell me and I’ll adjust.
+  score_0_100: 62,
+
+  // Tags + top keywords pulled from titles/descriptions (grouped per tag)
+  flag_counting_rows: [
+    {
+      influencer: "Ewan McGregor",
+      tag: "Sensitive Political Topics",
+      words: "snub|interview|piers|morgan|womens|march|row|boris|johnson|brexit|tweets|tirade"
+    }
+  ],
+
+  // Evidence links (deduped). Tag taken directly from the sheet.
+  evidence_links_rows: [
+    {
+      influencer: "Ewan McGregor",
+      tag: "Sensitive Political Topics",
+      url: "https://www.theguardian.com/film/2017/jan/24/ewan-mcgregor-snubs-good-morning-britain-interview-piers-morgan-womens-march-row"
+    },
+    {
+      influencer: "Ewan McGregor",
+      tag: "Sensitive Political Topics",
+      url: "https://www.usatoday.com/story/news/nation-now/2016/06/30/ewan-mcgregor-foul-mouthed-tirade-boris-johnson-brexit/86554272/"
+    }
+  ],
+
+  // Executive assessment (from your 'summary' field)
+  summary_text: `1. Profile Context
+Ewan McGregor is a high-profile actor (global visibility). Assessment triggered by press items touching political commentary/sensitivity.
+
+2. Positive Partnership Signals
+Consistent professional standing and philanthropic participation; media presence is generally positive.
+
+3. Legal, Regulatory & Reputational Exposure
+Exposure stems from political commentary/alignments reported in press and past personal-life coverage. Monitor narratives across UK/US outlets.
+
+4. Net Partnership Exposure Assessment
+Overall manageable risk; maintain watch on sensitive topics and evolving news cycles.
+
+5. Legal Positioning Recommendation
+Suitable with safeguards / monitoring.`
+},
+
+// ==============================
+// Taylor Fritz
+// ==============================
+taylor_fritz: {
+  // Spreadsheet score appears in 0–100 already (~12.39) → rounded to 12
+  score_0_100: 12,
+
+  flag_counting_rows: [
+    {
+      influencer: "Taylor Fritz",
+      tag: "Negative Sentiment",
+      words: "trolls|abuse|comments|backlash|social|media|australian|open|criticize|defend|clap|respond"
+    },
+    {
+      influencer: "Taylor Fritz",
+      tag: "Collaboration Experience",
+      words: "collaboration|brand|lifestyle|partnership|campaign|fashion|gen|crew|tennis|dc|open"
+    },
+    {
+      influencer: "Taylor Fritz",
+      tag: "Protest",
+      words: "climate|protest|match|delay|washington|guardian|crowd|hold|off"
+    },
+    {
+      influencer: "Taylor Fritz",
+      tag: "Abuse",
+      words: "harassment|online|abuse|trolls|backlash|comments|posts"
+    }
+  ],
+
+  evidence_links_rows: [
+    { influencer: "Taylor Fritz", tag: "Negative Sentiment", url: "https://www.dailymail.co.uk/sport/tennis/article-14494687/Tennis-WAG-Morgan-Riddle-boyfriend-Taylor-Fritz-trolls.html" },
+    { influencer: "Taylor Fritz", tag: "Negative Sentiment", url: "https://www.express.co.uk/sport/tennis/2160031/taylor-fritz-girlfriend-morgan-riddle-australian-open" },
+    { influencer: "Taylor Fritz", tag: "Collaboration Experience", url: "https://www.si.com/onsi/serve/interviews/taylor-fritz-beach-inspired-tennis-collaboration-dc-open" },
+    { influencer: "Taylor Fritz", tag: "Collaboration Experience", url: "https://people.com/morgan-riddle-tennis-star-boyfriend-taylor-fritz-make-tennis-cool-again-7570078" },
+    { influencer: "Taylor Fritz", tag: "Protest", url: "https://www.theguardian.com/sport/2023/aug/05/taylor-fritz-andy-murray-citi-open-climate-protest-tennis" },
+    { influencer: "Taylor Fritz", tag: "Abuse", url: "https://www.express.co.uk/sport/tennis/2160031/taylor-fritz-girlfriend-morgan-riddle-australian-open" }
+  ],
+
+  summary_text: `1. Profile Context
+Top US tennis player; high social reach via partner-driven content. Review triggered by waves of online discourse.
+
+2. Positive Reputation Signals
+Active collabs and lifestyle crossovers expand audience; mainstream sports coverage mostly positive.
+
+3. Risk & Sensitivity Factors
+Indirect exposure via social backlash toward partner/content; occasional association with protest-related match disruptions.
+
+4. Net Brand Association Assessment
+Low-to-moderate exposure; good fit for lifestyle/Gen Z positioning with standard guardrails.
+
+5. Recommendation
+Suitable with safeguards / monitoring (comment moderation; content review pre-brief).`
+},
+
+// ==============================
+// Vincent Cassel
+// ==============================
+vincent_cassel: {
+  score_0_100: 30,
+
+  flag_counting_rows: [
+    {
+      influencer: "Vincent Cassel",
+      tag: "brand endorsement",
+      words: "fashion|moncler|show|brand|campaign|style|cinema|influences|modeling|event|exclusive|dialogue"
+    }
+  ],
+
+  evidence_links_rows: [
+    {
+      influencer: "Vincent Cassel",
+      tag: "brand endorsement",
+      url: "https://infobae.com/entretenimiento/2025/03/20/vincent-cassel-sobre-su-influencias-en-el-cine-y-la-moda-es-cuestion-de-dejarse-llevar"
+    }
+  ],
+
+  summary_text: `1. Profile Context
+Ator consagrado com aparições recentes em eventos de moda/brand (endorsement).
+
+2. Positive Reputation Signals
+Bom fit de imagem premium; nenhuma controvérsia relevante listada.
+
+3. Risk & Sensitivity Factors
+Baixa exposição legal/reputacional; atenção apenas a contratos e uso de imagem.
+
+4. Net Brand Association Assessment
+Associação positiva com lifestyle/fashion; risco baixo.
+
+5. Recommendation
+Apto (baixo risco) — boas oportunidades para colabs de moda/luxo.`
+}
     // ============================================================================
     // DOM + STATE
     // ============================================================================
